@@ -1,5 +1,12 @@
 import csv
 
+
+def format_string(text):
+  """Converts a string to lowercase and replaces spaces with hyphens."""
+  text = text.lower()
+  text = text.replace(" ", "-")
+  return text
+
 OUTPUT_FILE = "result.csv"
 rate_mapper = {}
 PROPERTY_TAX_AND_COUNTY = "property_tax_county.csv"
@@ -62,9 +69,9 @@ with open(OUTPUT_FILE, 'w', newline='') as csvfile:
     for state, cities_dict in data.items():
         for city, city_info in cities_dict.items():
             writer.writerow({
-                fieldnames[0]: state,
-                fieldnames[1]: city,
-                fieldnames[2]: city_info["county"],
+                fieldnames[0]: format_string(state),
+                fieldnames[1]: format_string(city),
+                fieldnames[2]: format_string(city_info["county"]),
                 fieldnames[3]: city_info.get("median_value", ""),
                 fieldnames[4]: city_info.get("median_tax", "")
             })
