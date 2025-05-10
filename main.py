@@ -1,12 +1,13 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import csv
 
 app = Flask(__name__)
+CORS(app)
 
 # Route to get all items
 @app.route('/items/<state>/<city>', methods=['GET'])
 def get_items(state, city): 
-    
     result = process_csv_by_columns("result.csv", [0,1], [state, city], return_all=False)
     
     if result is None:
@@ -16,7 +17,7 @@ def get_items(state, city):
 @app.route('/cities/<state>', methods=['GET'])
 def get_cities(state):
     result =process_csv_by_columns("result.csv", [0], [state], return_all=True)
-    return {"state": result}
+    return {"state": state ,"cities": result}
     
 
 
